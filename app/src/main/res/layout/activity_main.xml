@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
+<Toolbar
+    android:id="@+id/app_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:background="@color/colorPrimary"
+    android:titleTextColor="@color/White"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="القرآن الكريم"
+        android:textDirection="rtl"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/White"
+        />
+</Toolbar>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_bar"
+        android:layout_above="@id/bottomNavigation"
+        >
+
+    </androidx.viewpager.widget.ViewPager>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:background="@color/colorPrimary"
+        app:tabGravity="fill"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabIndicatorColor="@color/White"
+        app:tabSelectedTextColor="@color/White"
+        app:tabTextColor="@color/White">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/readTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="قراءة"
+            android:textDirection="rtl"
+            android:icon="@drawable/ic_home"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/plannerTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="المخطط"
+            android:textDirection="rtl"
+            android:icon="@drawable/ic_planner"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/bookmarksTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="السجلات"
+            android:textDirection="rtl"
+            android:icon="@drawable/ic_bookmark"
+            />
+    </com.google.android.material.tabs.TabLayout>
+</RelativeLayout>
