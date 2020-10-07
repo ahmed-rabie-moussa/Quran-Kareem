@@ -1,12 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<com.github.ksoichiro.android.observablescrollview.ObservableScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/lastReadTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="READ"
-        android:textSize="28sp"/>
+        android:textSize="14sp"
+        android:text="Last Read"
+        android:textColor="@color/Black"
+        android:background="#d6d6d6"
+        android:padding="8dp"/>
+    <LinearLayout
+        android:id="@+id/lastReadLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lastReadTextView"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Al-Baqarah"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:layout_margin="8dp"
+            android:textSize="14sp"
+            android:background="@drawable/button_read_background"
+            android:textColor="@color/colorPrimary"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/quickLinkTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lastReadLayout"
+        android:textSize="14sp"
+        android:text="Quick Links"
+        android:textColor="@color/Black"
+        android:background="#d6d6d6"
+        android:padding="8dp"/>
+    <LinearLayout
+        android:id="@+id/quickLinkLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quickLinkTextView"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Al-Baqarah"
+            android:paddingStart="18dp"
+            android:textSize="14sp"
+            android:paddingEnd="18dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_read_background"
+            android:textColor="@color/colorPrimary"
+            />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quickLinkLayout"
+        android:textSize="14sp"
+        android:text="All:      Sura       Page     Juz        Hizb"
+        android:textColor="@color/Black"
+        android:background="#d6d6d6"
+        android:padding="8dp"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_sura"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/category"
+        />
 </RelativeLayout>
+</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

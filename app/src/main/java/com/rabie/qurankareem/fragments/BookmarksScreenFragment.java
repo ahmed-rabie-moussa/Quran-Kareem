@@ -12,6 +12,12 @@ import androidx.fragment.app.Fragment;
 import com.rabie.qurankareem.R;
 
 public class BookmarksScreenFragment extends Fragment {
+
+    private static BookmarksScreenFragment bookmarksScreenFragment = new BookmarksScreenFragment();
+    public static Fragment getInstance(){
+        return bookmarksScreenFragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

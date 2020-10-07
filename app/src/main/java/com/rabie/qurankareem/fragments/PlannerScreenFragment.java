@@ -12,6 +12,12 @@ import androidx.fragment.app.Fragment;
 import com.rabie.qurankareem.R;
 
 public class PlannerScreenFragment extends Fragment {
+
+    private static PlannerScreenFragment plannerScreenFragment = new PlannerScreenFragment();
+    public static Fragment getInstance(){
+        return plannerScreenFragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

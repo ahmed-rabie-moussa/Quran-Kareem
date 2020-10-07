@@ -1,26 +1,108 @@
 package com.rabie.qurankareem.fragments;
 
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rabie.qurankareem.R;
+import com.rabie.qurankareem.models.Chapter;
+import com.rabie.qurankareem.models.ChapterViewModel;
+import com.rabie.qurankareem.models.ChaptersList;
+import com.rabie.qurankareem.networking.APIClient;
+import com.rabie.qurankareem.networking.APIInterface;
+import com.rabie.qurankareem.networking.RESTApi;
 
-public class ReadScreenFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+
+public class ReadScreenFragment extends Fragment implements ObservableScrollViewCallbacks {
+    ArrayList<Chapter> fetchedChapters;
+    ChapterViewModel chapterViewModel;
+    private static ReadScreenFragment readScreenFragment = new ReadScreenFragment();
+
+    public static Fragment getInstance() {
+        return readScreenFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_read, container, false);
+        View view = inflater.inflate(R.layout.fragment_read, container, false);
+        chapterViewModel = ViewModelProviders.of(this).get(ChapterViewModel.class);
+        chapterViewModel.getChapters();
+        chapterViewModel.chapterListMutableLiveData.observe(getActivity(), new Observer<ChaptersList>() {
+            @Override
+            public void onChanged(ChaptersList chaptersList) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+                SuraFragment suraFragment = new SuraFragment(chaptersList.getChapters());
+                fragmentTransaction.add(R.id.fragment_sura,suraFragment);
+                fragmentTransaction.commit();
+                Log.i("Toto" , "The size is " + chaptersList.getChapters().size());
+            }
+        });
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+    }
+
+
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+        ActionBar ab = getActivity().getActionBar();
+        if (scrollState == ScrollState.UP) {
+            if (ab.isShowing()) {
+                ab.hide();
+            }
+        } else if (scrollState == ScrollState.DOWN) {
+            if (!ab.isShowing()) {
+                ab.show();
+            }
+        }
     }
 }

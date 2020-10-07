@@ -19,10 +19,10 @@ public class MainScreenPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int i) {
-        if (i == 0) return new ReadScreenFragment();
-        else if (i == 1) return new PlannerScreenFragment();
-        else if (i == 2) return new BookmarksScreenFragment();
-        else return new ReadScreenFragment();
+        if (i == 0) return ReadScreenFragment.getInstance();
+        else if (i == 1) return PlannerScreenFragment.getInstance();
+        else if (i == 2) return BookmarksScreenFragment.getInstance();
+        else return ReadScreenFragment.getInstance();
     }
 
     @Override
