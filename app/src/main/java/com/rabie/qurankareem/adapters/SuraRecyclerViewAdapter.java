@@ -5,28 +5,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStore;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rabie.qurankareem.R;
 import com.rabie.qurankareem.models.Chapter;
+import com.rabie.qurankareem.models.ChapterAndTranslatedName;
+import com.rabie.qurankareem.models.ChapterInfo;
+import com.rabie.qurankareem.models.ChapterViewModel;
 
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.SingleSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 public class SuraRecyclerViewAdapter extends RecyclerView.Adapter<SuraRecyclerViewAdapter.SuraViewHolder> {
-    List<Chapter> chapters;
-    public void setChapters(List<Chapter> chapters) {
+    List<ChapterAndTranslatedName> chapters;
+    public void setChapters(List<ChapterAndTranslatedName> chapters) {
         this.chapters = chapters;
     }
 
-
-
-    public SuraRecyclerViewAdapter(List<Chapter> chapters) {
+    public SuraRecyclerViewAdapter(List<ChapterAndTranslatedName> chapters) {
         this.chapters = chapters;
     }
 
-    public static class SuraViewHolder extends RecyclerView.ViewHolder {
+    public static class SuraViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView suraNumberTextView;
         TextView engSuraNameTextView;
@@ -41,9 +55,39 @@ public class SuraRecyclerViewAdapter extends RecyclerView.Adapter<SuraRecyclerVi
             suraNumberTextView = itemView.findViewById(R.id.suraNumberTextView);
             translatedNameTextView = itemView.findViewById(R.id.translatedNameTextView);
             revelationPlaceImageView = itemView.findViewById(R.id.revelationPlaceImageView);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            System.out.println("OnClick" + getAdapterPosition());
+        }
 
+        @Override
+        public boolean onLongClick(View v) {
+            ChapterViewModel chapterViewModel= new ViewModelProvider(ViewModelStore::new).get(ChapterViewModel.class);
+            chapterViewModel.getChapterInfoFromApi(suraNumberTextView.getText().toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<ChapterInfo>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(ChapterInfo chapterInfo) {
+                            System.out.println(chapterInfo.getChapterInfo().getText());
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            System.out.println(e.getMessage());
+                        }
+                    });
+            return true;
+        }
     }
 
     @NonNull
@@ -56,12 +100,11 @@ public class SuraRecyclerViewAdapter extends RecyclerView.Adapter<SuraRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull SuraViewHolder holder, int position) {
-        holder.suraNumberTextView.setText("" +chapters.get(position).getChapter_number());
-        holder.engSuraNameTextView.setText(chapters.get(position).getName_simple());
-        holder.translatedNameTextView.setText(chapters.get(position).getTranslated_name().getName());
-        holder.suraNameTextView.setText(chapters.get(position).getName_arabic());
-        System.out.println(chapters.get(position).getName_arabic());
-        if (chapters.get(position).getRevelation_place().equals("makkah")){
+        holder.suraNumberTextView.setText("" +chapters.get(position).chapter.getChapter_number());
+        holder.engSuraNameTextView.setText(chapters.get(position).chapter.getName_simple());
+        holder.translatedNameTextView.setText(chapters.get(position).translatedName.getName());
+        holder.suraNameTextView.setText(chapters.get(position).chapter.getName_arabic());
+        if (chapters.get(position).chapter.getRevelation_place().equals("makkah")){
             holder.revelationPlaceImageView.setImageResource(R.drawable.ic_kaaba_mecca);
         }
         else holder.revelationPlaceImageView.setImageResource(R.drawable.ic_madinah);
@@ -76,6 +119,7 @@ public class SuraRecyclerViewAdapter extends RecyclerView.Adapter<SuraRecyclerVi
     public int getItemCount() {
         return chapters.size();
     }
+
 
 
 }

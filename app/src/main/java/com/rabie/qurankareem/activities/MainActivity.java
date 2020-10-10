@@ -1,25 +1,16 @@
 package com.rabie.qurankareem.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
+
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
+
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
-import com.google.android.material.tabs.TabItem;
+
 import com.google.android.material.tabs.TabLayout;
 import com.rabie.qurankareem.R;
 import com.rabie.qurankareem.adapters.MainScreenPagerAdapter;
@@ -32,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpView();
-
     }
 
 

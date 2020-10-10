@@ -42,8 +42,7 @@ public class ChapterViewModel extends ViewModel {
     public Observable<ChaptersList> getChaptersFromApi(){
         Retrofit retrofit = APIClient.getClient();
         APIInterface apiInterface = retrofit.create(APIInterface.class);
-        Observable<ChaptersList> observable = apiInterface.fetchChapters();
-        return observable;
+        return apiInterface.fetchChapters();
     }
 
 
@@ -65,5 +64,10 @@ public class ChapterViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Single<ChapterInfo> getChapterInfoFromApi(String chapter_id){
+        Retrofit retrofit = APIClient.getClient();
+        APIInterface apiInterface = retrofit.create(APIInterface.class);
+        return apiInterface.fetchChapterInfo(chapter_id);
+    }
 
 }

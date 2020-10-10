@@ -16,14 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.rabie.qurankareem.R;
 import com.rabie.qurankareem.adapters.SuraRecyclerViewAdapter;
 import com.rabie.qurankareem.models.Chapter;
+import com.rabie.qurankareem.models.ChapterAndTranslatedName;
 
 import java.util.List;
 
 
 public class SuraFragment extends Fragment {
-    List<Chapter> chapters;
+    List<ChapterAndTranslatedName> chapters;
 
-    public SuraFragment(List<Chapter> chapters) {
+    public SuraFragment(List<ChapterAndTranslatedName> chapters) {
         this.chapters = chapters;
     }
 
@@ -37,6 +38,7 @@ public class SuraFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new SuraRecyclerViewAdapter(chapters));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
         return view;
     }
 

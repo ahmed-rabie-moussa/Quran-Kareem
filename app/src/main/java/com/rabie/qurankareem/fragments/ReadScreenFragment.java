@@ -23,6 +23,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rabie.qurankareem.R;
+import com.rabie.qurankareem.database.QuranDatabase;
 import com.rabie.qurankareem.models.Chapter;
 import com.rabie.qurankareem.models.ChapterAndTranslatedName;
 import com.rabie.qurankareem.models.ChapterViewModel;
@@ -37,6 +38,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,17 +68,29 @@ public class ReadScreenFragment extends Fragment implements ObservableScrollView
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_read, container, false);
         chapterViewModel = new ViewModelProvider(this).get(ChapterViewModel.class);
-//        chapterViewModel.getChaptersFromApi(getContext());
-//        chapterViewModel.chapterListMutableLiveData.observe(getActivity(), new Observer<ChapterAndTranslatedName>() {
-//            @Override
-//            public void onChanged(ChapterAndTranslatedName chaptersList) {
-////                FragmentManager fragmentManager = getParentFragmentManager();
-////                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-////                SuraFragment suraFragment = new SuraFragment(chaptersList.getChapter());
-////                fragmentTransaction.add(R.id.fragment_sura,suraFragment);
-////                fragmentTransaction.commit();
-//            }
-//        });
+        QuranDatabase.getInstance(getContext()).chaptersDao().getChapters()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<ChapterAndTranslatedName>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(List<ChapterAndTranslatedName> chapterAndTranslatedNames) {
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        SuraFragment suraFragment = new SuraFragment(chapterAndTranslatedNames);
+                        fragmentTransaction.add(R.id.fragment_sura, suraFragment);
+                        fragmentTransaction.commit();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
 
 
         return view;
