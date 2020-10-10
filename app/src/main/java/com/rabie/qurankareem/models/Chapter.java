@@ -1,38 +1,75 @@
 package com.rabie.qurankareem.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import retrofit2.SkipCallbackExecutor;
-
+@Entity(tableName = "chapters")
 public class Chapter implements Serializable {
+    @PrimaryKey
     @SerializedName("id")
     private int id;
+
+    @ColumnInfo(name = "chapter_number")
     @SerializedName("chapter_number")
     private int chapter_number;
+
+    @ColumnInfo(name = "bismillah_pre")
     @SerializedName("bismillah_pre")
     private boolean bismillah_pre;
+
+    @ColumnInfo(name = "revelation_order")
     @SerializedName("revelation_order")
     private int revelation_order;
+
+    @ColumnInfo(name = "revelation_place")
     @SerializedName("revelation_place")
     private String revelation_place;
+
+    @ColumnInfo(name = "name_complex")
     @SerializedName("name_complex")
     private String name_complex;
+
+    @ColumnInfo(name = "name_arabic")
     @SerializedName("name_arabic")
     private String name_arabic;
+
+    @ColumnInfo(name = "name_simple")
     @SerializedName("name_simple")
     private String name_simple;
+
+    @ColumnInfo(name = "verses_count")
     @SerializedName("verses_count")
     private int verses_count;
+
+    @ColumnInfo(name = "pages")
     @SerializedName("pages")
     private List<Integer> pages;
+    @Ignore
     @SerializedName("translated_name")
     private TranslatedName translated_name;
+    @Ignore
+    public Chapter() {
+    }
 
+    public Chapter(int id, int chapter_number, boolean bismillah_pre, int revelation_order, String revelation_place, String name_complex, String name_arabic, String name_simple, int verses_count, List<Integer> pages) {
+        this.id = id;
+        this.chapter_number = chapter_number;
+        this.bismillah_pre = bismillah_pre;
+        this.revelation_order = revelation_order;
+        this.revelation_place = revelation_place;
+        this.name_complex = name_complex;
+        this.name_arabic = name_arabic;
+        this.name_simple = name_simple;
+        this.verses_count = verses_count;
+        this.pages = pages;
+    }
 
     public int getId() {
         return id;
@@ -122,50 +159,4 @@ public class Chapter implements Serializable {
         this.translated_name = translated_name;
     }
 
-
-    public Chapter(int id, int chapter_number, boolean bismillah_pre, int revelation_order, String revelation_place, String name_complex, String name_arabic, String name_simple, int verses_count, List<Integer> pages, TranslatedName translated_name) {
-        this.id = id;
-        this.chapter_number = chapter_number;
-        this.bismillah_pre = bismillah_pre;
-        this.revelation_order = revelation_order;
-        this.revelation_place = revelation_place;
-        this.name_complex = name_complex;
-        this.name_arabic = name_arabic;
-        this.name_simple = name_simple;
-        this.verses_count = verses_count;
-        this.pages = pages;
-        this.translated_name = translated_name;
-    }
-
-
-    public class TranslatedName {
-        @SerializedName("language_name")
-        String language_name;
-        @SerializedName("name")
-        String name;
-
-
-        public TranslatedName(String language_name, String name) {
-            this.language_name = language_name;
-            this.name = name;
-        }
-
-        public String getLanguage_name() {
-            return language_name;
-        }
-
-        public void setLanguage_name(String language_name) {
-            this.language_name = language_name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-
-    }
 }

@@ -23,17 +23,7 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.rabie.qurankareem.R;
 import com.rabie.qurankareem.adapters.MainScreenPagerAdapter;
-import com.rabie.qurankareem.models.Chapter;
-import com.rabie.qurankareem.networking.APIInterface;
-import com.rabie.qurankareem.networking.RESTApi;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setUpView();
+
+    }
+
+
+    public void setUpView (){
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         MainScreenPagerAdapter mainScreenPagerAdapter = new MainScreenPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mainScreenPagerAdapter);
@@ -55,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setText("السجل");
         int [][] states = new int[][]{new int[]{android.R.attr.state_selected},new int[]{}};
         int [] colors = {getResources().getColor(android.R.color.white),
-        getResources().getColor(android.R.color.darker_gray)};
+                getResources().getColor(android.R.color.darker_gray)};
         tabLayout.setTabIconTint(new ColorStateList(states,colors));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
@@ -85,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
 

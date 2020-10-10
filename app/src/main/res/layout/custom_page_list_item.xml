@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/pageNumberTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Page 1"
+            android:textSize="18sp"
+            android:textAlignment="viewStart"
+            android:layout_marginStart="24dp"
+            android:textColor="@color/Black"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/pageFirstVerseTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Al-Fatihah 1:1"
+            android:textSize="18sp"
+            android:textAlignment="viewStart"
+            android:layout_marginStart="24dp"
+            android:textColor="@color/Black"
+            android:textDirection="rtl"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/pageFirstWordsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="بسم الله الرحمن"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/quran"
+        android:textColor="@color/Black"
+        android:textDirection="rtl"
+        android:layout_weight="1"/>
+
+
+</LinearLayout>

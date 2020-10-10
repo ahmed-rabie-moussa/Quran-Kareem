@@ -5,11 +5,12 @@ package com.rabie.qurankareem.networking;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
+
+
 import retrofit2.Retrofit;
 
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
+
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
@@ -22,7 +23,7 @@ public class APIClient {
         retrofit = new Retrofit.Builder()
                 .baseUrl(RESTApi.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
     }

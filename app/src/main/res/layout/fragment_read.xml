@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
     <TextView
@@ -64,21 +64,20 @@
             android:textColor="@color/colorPrimary"
             />
     </LinearLayout>
-    <TextView
-        android:id="@+id/category"
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/categoryTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/quickLinkLayout"
-        android:textSize="14sp"
-        android:text="All:      Sura       Page     Juz        Hizb"
-        android:textColor="@color/Black"
         android:background="#d6d6d6"
-        android:padding="8dp"/>
+        android:layout_below="@id/quickLinkLayout"
+        />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_sura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/category"
+        android:layout_below="@id/categoryTabLayout"
         />
 </RelativeLayout>
 </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

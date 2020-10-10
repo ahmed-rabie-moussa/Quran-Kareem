@@ -3,10 +3,49 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/lastReadBookmarksTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="BOOKMARKS"
-        android:textSize="28sp"/>
+        android:textSize="14sp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text="آخر قراءة"
+        android:textDirection="rtl"
+        android:textColor="@color/Black"
+        android:background="#d6d6d6"
+        android:padding="8dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lastReadRecyclerView"
+        android:layout_below="@id/lastReadBookmarksTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="10dp"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/favouriteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lastReadRecyclerView"
+        android:layout_marginTop="16dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:textSize="14sp"
+        android:text="المفضلات"
+        android:textDirection="rtl"
+        android:textStyle="bold"
+        android:textColor="@color/CornflowerBlue"
+        android:padding="8dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favouriteRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/favouriteTextView"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="10dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>
