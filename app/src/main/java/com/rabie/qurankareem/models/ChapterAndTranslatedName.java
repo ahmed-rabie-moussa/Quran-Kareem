@@ -3,6 +3,8 @@ package com.rabie.qurankareem.models;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
+import java.io.Serializable;
+
 public class ChapterAndTranslatedName {
 
     @Embedded

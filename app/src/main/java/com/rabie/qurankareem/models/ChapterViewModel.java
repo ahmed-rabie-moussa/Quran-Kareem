@@ -47,27 +47,28 @@ public class ChapterViewModel extends ViewModel {
 
 
     public Single<List<Long>> putChaptersToRoom(List<Chapter> chapterList, Context context){
-        QuranDatabase quranDatabase = QuranDatabase.getInstance(context);
-        return quranDatabase.chaptersDao().insertChapter(chapterList);
+        return QuranDatabase.getInstance(context).chaptersDao().insertChapter(chapterList);
     }
 
 
     public Single<List<Long>> putTranslatedChapterNameToRoom(List<TranslatedName> translatedNames, Context context){
-        QuranDatabase quranDatabase = QuranDatabase.getInstance(context);
-        return quranDatabase.chaptersDao().insertTranslatedChapterName(translatedNames);
+        return QuranDatabase.getInstance(context).chaptersDao().insertTranslatedChapterName(translatedNames);
     }
 
     public Single<List<ChapterAndTranslatedName>> getChaptersFromDB(Context context){
-        QuranDatabase quranDatabase = QuranDatabase.getInstance(context);
-        return quranDatabase.chaptersDao().getChapters()
+        return QuranDatabase.getInstance(context).chaptersDao().getChapters()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ChapterInfo> getChapterInfoFromApi(String chapter_id){
+    public Single<ChapterInfo> getChapterInfoFromApi(String chapter_id) {
         Retrofit retrofit = APIClient.getClient();
         APIInterface apiInterface = retrofit.create(APIInterface.class);
         return apiInterface.fetchChapterInfo(chapter_id);
+    }
+
+    public Single<ChapterAndTranslatedName> getChapterfromBD(int chapter_id, Context context) {
+        return QuranDatabase.getInstance(context).chaptersDao().getChapter(chapter_id);
     }
 
 }

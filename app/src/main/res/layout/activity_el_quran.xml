@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context=".activities.ElQuranActivity"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/quranSuraTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quran"
+            android:gravity="center"
+            android:text="الفاتحة"
+            android:textColor="@color/Brown"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/quranSuraTextNameEng"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quran"
+            android:gravity="center"
+            android:text="The Opening"
+            android:textColor="@color/DimGray"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/basmalahView"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/basmalah" />
+
+        <TextView
+            android:id="@+id/quranSuraText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quran"
+            android:gravity="center"
+            android:letterSpacing="0.2"
+            android:lineSpacingExtra="24dp"
+            android:padding="8dp"
+            android:text="بسم الله الرحمن الرحيم ۞ الحمد لله رب العالمين ۞ الرحمن الرحيم ۞ مالك يوم الدين ۞ اياك نعيد واياك نستعين ۞ اهدنا الصراط المستقيم ۞ صراط الذين انعمت عليهم ۞ غير المغضوب عليهم ۞ ولا الضالين "
+            android:textColor="@color/Black"
+            android:textDirection="rtl"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

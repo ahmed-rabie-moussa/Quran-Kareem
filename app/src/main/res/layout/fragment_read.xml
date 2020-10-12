@@ -1,83 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.ksoichiro.android.observablescrollview.ObservableScrollView
-    android:layout_height="match_parent"
+<com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
 
-<RelativeLayout
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/lastReadTextView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:text="Last Read"
-        android:textColor="@color/Black"
-        android:background="#d6d6d6"
-        android:padding="8dp"/>
-    <LinearLayout
-        android:id="@+id/lastReadLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lastReadTextView"
-        >
-        <Button
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lastReadTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Al-Baqarah"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            android:layout_margin="8dp"
-            android:textSize="14sp"
-            android:background="@drawable/button_read_background"
-            android:textColor="@color/colorPrimary"
-            />
+            android:background="#d6d6d6"
+            android:padding="8dp"
+            android:text="Last Read"
+            android:textColor="@color/Black"
+            android:textSize="14sp" />
 
-    </LinearLayout>
-    <TextView
-        android:id="@+id/quickLinkTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lastReadLayout"
-        android:textSize="14sp"
-        android:text="Quick Links"
-        android:textColor="@color/Black"
-        android:background="#d6d6d6"
-        android:padding="8dp"/>
-    <LinearLayout
-        android:id="@+id/quickLinkLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/quickLinkTextView"
-        >
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/lastReadLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Al-Baqarah"
+            android:layout_below="@id/lastReadTextView">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_read_background"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:text="Al-Baqarah"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/quickLinkTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lastReadLayout"
+            android:background="#d6d6d6"
+            android:padding="8dp"
+            android:text="Quick Links"
+            android:textColor="@color/Black"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/quickLinkLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quickLinkTextView">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/button_read_background"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:text="Al-Baqarah"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/categoryTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quickLinkLayout"
+            android:layout_marginEnd="10dp"
+            android:background="#d6d6d6"
             android:paddingStart="18dp"
-            android:textSize="14sp"
+            android:paddingTop="8dp"
             android:paddingEnd="18dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/button_read_background"
-            android:textColor="@color/colorPrimary"
-            />
-    </LinearLayout>
+            android:paddingBottom="8dp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/categoryTabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#d6d6d6"
-        android:layout_below="@id/quickLinkLayout"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_sura"
-        android:layout_width="match_parent"
-        android:layout_height="750dp"
-        android:layout_below="@id/categoryTabLayout"
-        />
-</RelativeLayout>
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="All: "
+                android:textColor="@color/Black"
+
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/suraTouchedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sura"
+                android:textColor="@color/Black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/pageTouchedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Page"
+                android:textColor="@color/LightSlateGray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/juzTouchedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Juz"
+                android:textColor="@color/LightSlateGray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/rubTouchedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Rub"
+                android:textColor="@color/LightSlateGray"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_category"
+            android:layout_width="match_parent"
+            android:layout_height="750dp"
+            android:layout_below="@id/categoryTabLayout" />
+    </RelativeLayout>
 </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>

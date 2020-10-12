@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,9 @@ import com.rabie.qurankareem.models.Chapter;
 import com.rabie.qurankareem.models.ChapterAndTranslatedName;
 import com.rabie.qurankareem.models.ChapterViewModel;
 import com.rabie.qurankareem.models.ChaptersList;
+import com.rabie.qurankareem.models.Verse;
+import com.rabie.qurankareem.models.VerseWithInfo;
+import com.rabie.qurankareem.models.Word;
 import com.rabie.qurankareem.networking.APIClient;
 import com.rabie.qurankareem.networking.APIInterface;
 import com.rabie.qurankareem.networking.RESTApi;
@@ -52,6 +56,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ReadScreenFragment extends Fragment implements ObservableScrollViewCallbacks {
     ArrayList<Chapter> fetchedChapters;
     ChapterViewModel chapterViewModel;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
     private static ReadScreenFragment readScreenFragment = new ReadScreenFragment();
 
     public static Fragment getInstance() {
@@ -68,6 +74,57 @@ public class ReadScreenFragment extends Fragment implements ObservableScrollView
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_read, container, false);
         chapterViewModel = new ViewModelProvider(this).get(ChapterViewModel.class);
+        TextView suraTextView = view.findViewById(R.id.suraTouchedTextView);
+        TextView pageTextView = view.findViewById(R.id.pageTouchedTextView);
+        TextView juzTextView = view.findViewById(R.id.juzTouchedTextView);
+        TextView rubTextView = view.findViewById(R.id.rubTouchedTextView);
+        getSuraFragment();
+        suraTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSuraFragment();
+                suraTextView.setTextColor(getResources().getColor(R.color.Black));
+                pageTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                juzTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                rubTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+            }
+        });
+        pageTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPageFragment();
+                suraTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                pageTextView.setTextColor(getResources().getColor(R.color.Black));
+                juzTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                rubTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+            }
+        });
+        juzTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getJuzFragment();
+                suraTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                pageTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                juzTextView.setTextColor(getResources().getColor(R.color.Black));
+                rubTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+            }
+        });
+        rubTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getRubFragment();
+                suraTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                pageTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                juzTextView.setTextColor(getResources().getColor(R.color.LightSlateGray));
+                rubTextView.setTextColor(getResources().getColor(R.color.Black));
+            }
+        });
+
+
+        return view;
+    }
+
+    public void getSuraFragment() {
         QuranDatabase.getInstance(getContext()).chaptersDao().getChapters()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -82,7 +139,33 @@ public class ReadScreenFragment extends Fragment implements ObservableScrollView
                         FragmentManager fragmentManager = getParentFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         SuraFragment suraFragment = new SuraFragment(chapterAndTranslatedNames);
-                        fragmentTransaction.add(R.id.fragment_sura, suraFragment);
+                        fragmentTransaction.replace(R.id.fragment_category, suraFragment);
+                        fragmentTransaction.commit();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+    }
+
+    public void getPageFragment() {
+        QuranDatabase.getInstance(getContext()).chaptersDao().getTotalPages()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Integer integer) {
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        PageFragment pageFragment = new PageFragment(integer);
+                        fragmentTransaction.replace(R.id.fragment_category, pageFragment);
                         fragmentTransaction.commit();
                     }
 
@@ -92,9 +175,17 @@ public class ReadScreenFragment extends Fragment implements ObservableScrollView
                     }
                 });
 
-
-        return view;
     }
+
+    public void getJuzFragment() {
+
+
+    }
+
+    public void getRubFragment() {
+
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -111,6 +202,7 @@ public class ReadScreenFragment extends Fragment implements ObservableScrollView
     public void onDownMotionEvent() {
 
     }
+
 
     @Override
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {

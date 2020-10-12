@@ -23,4 +23,5 @@ public interface APIInterface {
 
     @GET("/api/v3/chapters/{chapter_id}/info")
     Single<ChapterInfo> fetchChapterInfo(@Path("chapter_id") String chapterId);
+
 }
