@@ -1,10 +1,36 @@
 package com.rabie.qurankareem.models;
 
-public class Recitation {
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+@Entity(tableName = "recitations")
+public class Recitation implements Serializable {
+
+    @PrimaryKey
+    @SerializedName("id")
     private int id;
+
+    @ColumnInfo(name = "style")
+    @SerializedName("style")
     private String style;
+
+    @ColumnInfo(name = "reciter_name_eng")
+    @SerializedName("reciter_name_eng")
     private String reciter_name_eng;
+
+    @ColumnInfo(name = "reciter_name_translated")
+    @SerializedName("reciter_name_translated")
     private String reciter_name_translated;
+
+    @Ignore
+    public Recitation() {
+    }
 
     public Recitation(int id, String style, String reciter_name_eng, String reciter_name_translated) {
         this.id = id;

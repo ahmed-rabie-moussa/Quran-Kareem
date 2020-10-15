@@ -1,6 +1,5 @@
 package com.rabie.qurankareem.fragments;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,30 +12,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rabie.qurankareem.R;
 import com.rabie.qurankareem.adapters.PagesRecyclerViewAdapter;
-import com.rabie.qurankareem.adapters.SuraRecyclerViewAdapter;
 import com.rabie.qurankareem.database.QuranDatabase;
-import com.rabie.qurankareem.models.Chapter;
-import com.rabie.qurankareem.models.Page;
 import com.rabie.qurankareem.models.VerseWithInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 
 public class PageFragment extends Fragment implements LifecycleOwner {

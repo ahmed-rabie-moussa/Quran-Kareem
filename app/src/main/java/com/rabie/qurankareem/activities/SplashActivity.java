@@ -47,6 +47,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -167,8 +168,19 @@ public class SplashActivity extends Activity implements LifecycleOwner {
 
                     @Override
                     public void onComplete() {
+                        //get recitation from api
+                        chapterViewModel.getRecitationsFromApi()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(recitationsList -> chapterViewModel.putRecitationsToRoom(recitationsList.getRecitationList(), getApplicationContext())
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(longs -> {
+                                                }, error -> {
+                                                })
+                                        , error -> Log.i("SplashActivity", "Recitations updated"));
                         quranViewModel.quranMutableLiveData.setValue(reorderVersesInQuran(chapterWithVersesArrayList));
-                        SharedPreferences.Editor editor =sharedPref.edit();
+                        SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putBoolean("isDownloaded", true);
                         editor.commit();
                     }
@@ -264,7 +276,7 @@ public class SplashActivity extends Activity implements LifecycleOwner {
     }
 
     public Observable<VersesList> getChaptersVersesFromApi(Chapter chapter) {
-        return quranViewModel.getChapterVerses(Integer.toString(chapter.getId()))
+        return quranViewModel.getChapterVerses(Integer.toString(chapter.getId()), 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

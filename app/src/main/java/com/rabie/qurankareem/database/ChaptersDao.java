@@ -10,6 +10,7 @@ import androidx.room.Transaction;
 import com.rabie.qurankareem.models.Audio;
 import com.rabie.qurankareem.models.Chapter;
 import com.rabie.qurankareem.models.ChapterAndTranslatedName;
+import com.rabie.qurankareem.models.Recitation;
 import com.rabie.qurankareem.models.TranslatedName;
 import com.rabie.qurankareem.models.Translation;
 import com.rabie.qurankareem.models.Verse;
@@ -28,17 +29,20 @@ import io.reactivex.Single;
 public interface ChaptersDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Single<List<Long>> insertChapter (List<Chapter> chapters);
+    Single<List<Long>> insertChapter(List<Chapter> chapters);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Single<List<Long>> insertTranslatedChapterName (List<TranslatedName> translatedNames);
+    Single<List<Long>> insertRecitations(List<Recitation> recitations);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Single<List<Long>> insertTranslatedChapterName(List<TranslatedName> translatedNames);
 
     @Transaction
     @Query("SELECT * FROM chapters")
-    Single<List<ChapterAndTranslatedName>> getChapters ();
+    Single<List<ChapterAndTranslatedName>> getChapters();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Single<List<Long>> insertVerses (List<Verse> verseList);
+    Single<List<Long>> insertVerses(List<Verse> verseList);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Single<List<Long>> insertWords(List<Word> wordList);

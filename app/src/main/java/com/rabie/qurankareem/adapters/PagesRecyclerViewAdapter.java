@@ -62,14 +62,12 @@ public class PagesRecyclerViewAdapter extends RecyclerView.Adapter<PagesRecycler
 
     @Override
     public void onBindViewHolder(@NonNull PagesViewHolder holder, int position) {
-        holder.pageNameNumberTextView.setText("Page " + (position + 1));
-        if (verseWithInfoList.get(position).size() == 0) {
-            holder.pageFirstVersTextView.setText(" ");
-            holder.pageFirstWordsTextView.setText(" ");
-        } else {
-            holder.pageFirstVersTextView.setText(verseWithInfoList.get(position).get(0).verse.getVerseKey());
+        holder.pageNameNumberTextView.setText("Page " + verseWithInfoList.get(position).get(0).verse.getPageNumber());
+        holder.pageFirstVersTextView.setText(verseWithInfoList.get(position).get(0).verse.getVerseKey());
+        if (verseWithInfoList.get(position).get(0).verse.getTextSimple().length() < 15)
+            holder.pageFirstWordsTextView.setText(verseWithInfoList.get(position).get(0).verse.getTextSimple() + "   " + verseWithInfoList.get(position).get(1).verse.getTextSimple());
+        else
             holder.pageFirstWordsTextView.setText(verseWithInfoList.get(position).get(0).verse.getTextSimple());
-        }
     }
 
     @Override

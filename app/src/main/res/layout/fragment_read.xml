@@ -49,23 +49,83 @@
             android:textColor="@color/Black"
             android:textSize="14sp" />
 
-        <LinearLayout
+        <HorizontalScrollView
             android:id="@+id/quickLinkLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbars="none"
             android:layout_below="@id/quickLinkTextView">
 
-            <Button
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/quickLinkLinearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="@drawable/button_read_background"
-                android:paddingStart="18dp"
-                android:paddingEnd="18dp"
-                android:text="Al-Baqarah"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
-        </LinearLayout>
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/yasinButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_read_background"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:text="YA SIN"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/mulkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_read_background"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:text="AL-MULK"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/kahfButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_read_background"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:text="AL-KAHF"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/rahmanButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_read_background"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:text="AR-RAHMAN"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/qadrButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/button_read_background"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:text="AL-QADR"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <LinearLayout
             android:id="@+id/categoryTabLayout"

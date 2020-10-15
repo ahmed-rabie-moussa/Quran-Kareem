@@ -1,56 +1,44 @@
 package com.rabie.qurankareem.fragments;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import com.rabie.qurankareem.R;
+import com.rabie.qurankareem.activities.ElQuranActivity;
+import com.rabie.qurankareem.activities.MainActivity;
 import com.rabie.qurankareem.database.QuranDatabase;
 import com.rabie.qurankareem.models.Chapter;
 import com.rabie.qurankareem.models.ChapterAndTranslatedName;
 import com.rabie.qurankareem.models.ChapterViewModel;
-import com.rabie.qurankareem.models.ChaptersList;
-import com.rabie.qurankareem.models.Verse;
-import com.rabie.qurankareem.models.VerseWithInfo;
-import com.rabie.qurankareem.models.Word;
-import com.rabie.qurankareem.networking.APIClient;
-import com.rabie.qurankareem.networking.APIInterface;
-import com.rabie.qurankareem.networking.RESTApi;
+
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.ListIterator;
+
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class ReadScreenFragment extends Fragment implements ObservableScrollViewCallbacks {
@@ -74,6 +62,50 @@ public class ReadScreenFragment extends Fragment implements ObservableScrollView
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_read, container, false);
         chapterViewModel = new ViewModelProvider(this).get(ChapterViewModel.class);
+        Button yasin = view.findViewById(R.id.yasinButton);
+        Button mulk = view.findViewById(R.id.mulkButton);
+        Button kahf = view.findViewById(R.id.kahfButton);
+        Button rahman = view.findViewById(R.id.rahmanButton);
+        Button qadr = view.findViewById(R.id.qadrButton);
+
+        Intent intent = new Intent(view.getContext(), ElQuranActivity.class);
+        yasin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("chapter", 36);
+                view.getContext().startActivity(intent);
+            }
+        });
+        mulk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("chapter", 67);
+                view.getContext().startActivity(intent);
+            }
+        });
+        kahf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("chapter", 18);
+                view.getContext().startActivity(intent);
+            }
+        });
+        rahman.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("chapter", 55);
+                view.getContext().startActivity(intent);
+            }
+        });
+        qadr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("chapter", 97);
+                view.getContext().startActivity(intent);
+            }
+        });
+
+
         TextView suraTextView = view.findViewById(R.id.suraTouchedTextView);
         TextView pageTextView = view.findViewById(R.id.pageTouchedTextView);
         TextView juzTextView = view.findViewById(R.id.juzTouchedTextView);

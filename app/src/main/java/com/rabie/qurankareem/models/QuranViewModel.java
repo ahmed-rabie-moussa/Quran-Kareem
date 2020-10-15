@@ -25,13 +25,12 @@ import retrofit2.Retrofit;
 
 public class QuranViewModel extends ViewModel {
     public MutableLiveData<List<ChapterWithVerses>> quranMutableLiveData = new MutableLiveData<List<ChapterWithVerses>>();
-    public MutableLiveData<Boolean> quranCompleted = new MutableLiveData<Boolean>();
 
 
-    public Observable<VersesList> getChapterVerses(String chapterID){
+    public Observable<VersesList> getChapterVerses(String chapterID, int recitation) {
         Retrofit retrofit = APIClient.getClient();
         APIInterface apiInterface = retrofit.create(APIInterface.class);
-        return apiInterface.fetchChapterVerses(chapterID);
+        return apiInterface.fetchChapterVerses(chapterID, recitation);
     }
 
     public Single insertVersesOnRoom (List<Verse> verses, Context context){

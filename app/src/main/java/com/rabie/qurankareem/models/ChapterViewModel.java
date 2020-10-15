@@ -71,4 +71,14 @@ public class ChapterViewModel extends ViewModel {
         return QuranDatabase.getInstance(context).chaptersDao().getChapter(chapter_id);
     }
 
+    public Single<RecitationsList> getRecitationsFromApi() {
+        Retrofit retrofit = APIClient.getClient();
+        APIInterface apiInterface = retrofit.create(APIInterface.class);
+        return apiInterface.fetchRecitations();
+    }
+
+    public Single<List<Long>> putRecitationsToRoom(List<Recitation> recitations, Context context) {
+        return QuranDatabase.getInstance(context).chaptersDao().insertRecitations(recitations);
+    }
+
 }
