@@ -81,4 +81,7 @@ public class ChapterViewModel extends ViewModel {
         return QuranDatabase.getInstance(context).chaptersDao().insertRecitations(recitations);
     }
 
+    public Single<List<Recitation>> getRecitationFromDB(Context context) {
+        return QuranDatabase.getInstance(context).chaptersDao().getRecitations();
+    }
 }

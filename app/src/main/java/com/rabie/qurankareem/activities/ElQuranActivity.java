@@ -22,11 +22,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rabie.qurankareem.R;
@@ -34,6 +39,7 @@ import com.rabie.qurankareem.database.QuranDatabase;
 import com.rabie.qurankareem.models.ChapterAndTranslatedName;
 import com.rabie.qurankareem.models.ChapterViewModel;
 import com.rabie.qurankareem.models.QuranViewModel;
+import com.rabie.qurankareem.models.Recitation;
 import com.rabie.qurankareem.models.Verse;
 import com.rabie.qurankareem.models.VerseWithInfo;
 import com.rabie.qurankareem.models.VersesList;
@@ -48,7 +54,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ElQuranActivity extends AppCompatActivity {
+public class ElQuranActivity extends AppCompatActivity implements ObservableScrollViewCallbacks {
     int mOffset = 1;
     int chapterNumber;
     Menu menu;
@@ -65,12 +71,17 @@ public class ElQuranActivity extends AppCompatActivity {
     BottomAppBar bottomAppBar;
     FloatingActionButton floatingActionButton;
     MenuItem stop;
+    MenuItem settings;
     MediaPlayer mediaPlayer = new MediaPlayer();
     String url;
     int recitation;
     SharedPreferences sharedPreferences;
     QuranViewModel quranViewModel = new ViewModelProvider(ViewModelStore::new).get(QuranViewModel.class);
+    ChapterViewModel chapterViewModel = new ViewModelProvider(ViewModelStore::new).get(ChapterViewModel.class);
     List<Verse> versesAPI;
+    ObservableScrollView scrollView;
+    List<Recitation> recitationsList;
+    SubMenu sheyokh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +92,7 @@ public class ElQuranActivity extends AppCompatActivity {
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         sharedPreferences = getSharedPreferences("Quran Kareem", Context.MODE_PRIVATE);
-        recitation = sharedPreferences.getInt("recitation", 4);
+        recitation = sharedPreferences.getInt("recitation", 7);
 
 
         floatingActionButton = findViewById(R.id.floatinActionButton);
@@ -108,6 +119,9 @@ public class ElQuranActivity extends AppCompatActivity {
         suraTextNameEng = findViewById(R.id.quranSuraTextNameEng);
         suraText = findViewById(R.id.quranSuraText);
         basmallahView = findViewById(R.id.basmalahView);
+        scrollView = findViewById(R.id.scrollableLayout);
+        scrollView.setScrollViewCallbacks(this);
+
         chapterNumber = getIntent().getIntExtra("chapter", 1);
         loadData(chapterNumber);
 
@@ -218,7 +232,7 @@ public class ElQuranActivity extends AppCompatActivity {
 
     public SpannableString colorSpans(String textSource, int start, int end) {
         SpannableString wordtoSpan = new SpannableString(textSource);
-        wordtoSpan.setSpan(new BackgroundColorSpan(getResources().getColor(R.color.Tan)), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        wordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.Brown)), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return wordtoSpan;
     }
 
@@ -253,6 +267,9 @@ public class ElQuranActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.bottom_app_bar, menu);
         this.menu = menu;
+        settings = menu.findItem(R.id.settings);
+        sheyokh = settings.getSubMenu();
+        prepareSounds();
         stop = menu.findItem(R.id.stop);
         stop.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -269,17 +286,43 @@ public class ElQuranActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                System.out.println("Settings");
-                break;
-            case R.id.stop:
-                System.out.println("Stop");
-                break;
+        int itemID = item.getItemId();
+        if (itemID != R.id.stop && itemID != R.id.settings) {
+            recitation = itemID;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("recitation", itemID);
+            editor.commit();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void prepareSounds() {
+        chapterViewModel.getRecitationFromDB(getApplicationContext())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<Recitation>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@io.reactivex.annotations.NonNull List<Recitation> recitations) {
+                        recitationsList = recitations;
+                        for (int i = 0; i < recitations.size(); i++) {
+                            String recitationName = recitations.get(i).getReciter_name_translated();
+                            if (recitations.get(i).getStyle() != null)
+                                recitationName += " (" + recitations.get(i).getStyle() + ")";
+                            sheyokh.add(0, recitations.get(i).getId(), i, recitationName);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        System.out.println(e.getMessage());
+                    }
+                });
+    }
 
     private void startQuran() {
         if (pausePosition == 0) {
@@ -299,7 +342,7 @@ public class ElQuranActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
+                            versesAPI = new ArrayList<>();
                         }
 
                         @Override
@@ -318,8 +361,9 @@ public class ElQuranActivity extends AppCompatActivity {
             try {
                 SpannableString text = colorSpans(suraAyatText, versesStart.get(position), versesEnd.get(position));
                 suraText.setText(text);
+                suraText.setVerticalScrollbarPosition(versesStart.get(position));
                 mediaPlayer.reset();
-                mediaPlayer.setDataSource(verseList.get(position).audio.getUrl());
+                mediaPlayer.setDataSource(versesAPI.get(position).getAudio().getUrl());
                 mediaPlayer.prepare();
                 mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
@@ -347,4 +391,23 @@ public class ElQuranActivity extends AppCompatActivity {
         mediaPlayer.stop();
     }
 
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+        if (scrollState == ScrollState.UP)
+            bottomAppBar.performHide();
+
+        else if (scrollState == ScrollState.DOWN)
+            bottomAppBar.performShow();
+
+    }
 }

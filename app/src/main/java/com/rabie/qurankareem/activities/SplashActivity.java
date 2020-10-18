@@ -243,7 +243,7 @@ public class SplashActivity extends Activity implements LifecycleOwner {
 
                                     @Override
                                     public void onError(Throwable e) {
-
+                                        System.out.println(e.getMessage());
                                     }
                                 });
 
@@ -354,6 +354,7 @@ public class SplashActivity extends Activity implements LifecycleOwner {
         protected void onPostExecute(Boolean result) {
             if (result){
                 getChaptersFromApiToRoom();
+
             }
             else {
                 Snackbar.make(view, "You are not connected to INTERNET", Snackbar.LENGTH_INDEFINITE)

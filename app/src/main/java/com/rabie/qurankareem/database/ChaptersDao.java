@@ -68,4 +68,7 @@ public interface ChaptersDao {
     @Query("SELECT * FROM verses WHERE chapter_id = :chapterID")
     Single<List<VerseWithInfo>> getVersesListOfChapter(int chapterID);
 
+    @Query("SELECT * FROM recitations")
+    Single<List<Recitation>> getRecitations();
+
 }

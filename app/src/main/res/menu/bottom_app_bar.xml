@@ -8,7 +8,9 @@
         android:iconTint="@color/White"
         android:title="Settings"
         app:iconTint="@color/White"
-        app:showAsAction="always" />
+        app:showAsAction="always">
+        <menu></menu>
+    </item>
     <item
         android:id="@+id/stop"
         android:icon="@drawable/ic_baseline_stop_24"
@@ -17,4 +19,5 @@
         android:visible="false"
         app:iconTint="@color/White"
         app:showAsAction="always" />
+
 </menu>
